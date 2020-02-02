@@ -2,4 +2,4 @@
 
 A pretty average JavaScript implementation of the classic game!
 
-https://charlielee.uk/snake
+https://www.charlielee.uk/snake
