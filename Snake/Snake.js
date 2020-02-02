@@ -137,7 +137,7 @@ class Snake {
       seenCoordinates.push(`${tile.xPos},${tile.yPos}`);
     });
 
-    return (seenCoordinates.length === new Set(seenCoordinates).size);
+    return (seenCoordinates.length !== new Set(seenCoordinates).size);
   }
 }
 

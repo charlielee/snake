@@ -14,6 +14,7 @@ class Game {
 
     // Game state
     this.score = 0;
+    this.gameSpeed = 170;
     this.scoreIndicator = document.querySelector("#score");
     this.snake = new Snake(noOfXTiles, noOfYTiles);
     this.updateApple();
@@ -34,10 +35,16 @@ class Game {
   mainLoop() {
     let self = this;
     setTimeout(function() {
-      requestAnimationFrame(() => { self.mainLoop() });
+      let frame = requestAnimationFrame(() => { self.mainLoop() });
 
       // Move the snake
       self.move();
+
+      // Check for collisions
+      if (self.snake.detectCollision()) {
+        cancelAnimationFrame(frame);
+        self.gameOver();
+      }
 
       // Check if an apple is caught
       if (self.apple.isCaught(self.snake)) {
@@ -47,9 +54,11 @@ class Game {
 
         // Increase the length of the snake
         self.snake.addTile();
+        if (self.gameSpeed > 80) {
+          self.gameSpeed -= 5;
+        }
       }
-
-    }, 200);
+    }, self.gameSpeed);
   }
 
   /**
@@ -107,9 +116,12 @@ class Game {
    */
   renderSnake() {
     let self = this;
-    this.snake.tiles.forEach((tile) => {
+    self.snake.tiles.forEach((tile) => {
       self.fillTile(tile.xPos, tile.yPos, "snake");
     });
+
+    // Make sure the apple never gets hidden
+    self.fillTile(self.apple.xCoor, self.apple.yCoor, "apple");
   }
 
   /**
@@ -147,6 +159,20 @@ class Game {
       this.tileWidth,
       this.tileHeight
     );
+  }
+
+  gameOver() {
+    alert(`Game Over! You scored ${this.score}.`);
+
+    // Reset the game
+    this.isPlaying = false;
+    this.score = 0;
+    this.gameSpeed = 170;
+    this.scoreIndicator.innerText = 0;
+    this.clearSnake();
+    this.snake = new Snake(this.noOfXTiles, this.noOfYTiles);
+    this.renderSnake();
+    this.updateApple();
   }
 }
 
