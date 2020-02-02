@@ -11,22 +11,26 @@ class Game {
 
     // Game state
     this.snake = new Snake(xTiles, yTiles);
-  }
-
-  getTileFromCoordinates(xCoor, yCoor) {
-    let tileX = Math.floor(xCoor / TILE_WIDTH);
-    let tileY = Math.floor(yCoor / TILE_HEIGHT);
-    return [tileX, tileY];
+    this.isPlaying = false;
   }
 
   /**
    * Begins the game
    */
   start() {
-    this.renderSnake();
+    this.isPlaying = true;
+    requestAnimationFrame(() => { this.mainLoop() });
   }
 
-  move(direction = null) {
+  mainLoop() {
+    let self = this;
+    setTimeout(function() {
+      requestAnimationFrame(() => { self.mainLoop() });
+      self.move();
+    }, 200);
+  }
+
+  move() {
     this.clearSnake();
     this.snake.move();
     this.renderSnake();
