@@ -2,18 +2,20 @@ import Apple from "../Snake/Apple.js"
 import Snake from "../Snake/Snake.js"
 
 class Game {
-  constructor(canvas, xTiles, yTiles) {
+  constructor(canvas, noOfXTiles, noOfYTiles) {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
 
     // Set up the grid
-    this.tileWidth = canvas.width / xTiles;
-    this.tileHeight = canvas.height / yTiles;
+    this.noOfXTiles = noOfXTiles;
+    this.noOfYTiles = noOfYTiles;
+    this.tileWidth = canvas.width / noOfXTiles;
+    this.tileHeight = canvas.height / noOfYTiles;
 
     // Game state
-    this.snake = new Snake(xTiles, yTiles);
-    this.apple = new Apple(xTiles, yTiles);
-    this.fillTile(this.apple.xCoor, this.apple.yCoor, "apple")
+    this.score = 0;
+    this.snake = new Snake(noOfXTiles, noOfYTiles);
+    this.updateApple();
     this.isPlaying = false;
   }
 
@@ -35,6 +37,16 @@ class Game {
 
       // Move the snake
       self.move();
+
+      // Check if an apple is caught
+      if (
+        self.snake.tiles[0].xPos === self.apple.xCoor &&
+        self.snake.tiles[0].yPos === self.apple.yCoor
+      ) {
+        self.score++;
+        self.updateApple();
+      }
+
     }, 200);
   }
 
@@ -96,6 +108,17 @@ class Game {
     this.snake.tiles.forEach((tile) => {
       self.fillTile(tile.xPos, tile.yPos, "snake");
     });
+  }
+
+  /**
+   * Renders a new apple on the grid
+   */
+  updateApple() {
+    if (this.apple) {
+      this.fillTile(this.apple.xCoor, this.apple.yCoor, "clear");
+    }
+    this.apple = new Apple(this.noOfXTiles, this.noOfYTiles);
+    this.fillTile(this.apple.xCoor, this.apple.yCoor, "apple");
   }
 
   /**
