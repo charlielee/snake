@@ -1,13 +1,15 @@
 import SnakeTile from "./SnakeTile.js";
 
+/**
+ * Represents the snake.
+ */
 class Snake {
   constructor(noOfXTiles, noOfYTiles) {
     this.noOfXTiles = noOfXTiles;
     this.noOfYTiles = noOfYTiles;
     this.tiles = [
       new SnakeTile(3, 5, true),
-      new SnakeTile(4, 5),
-      new SnakeTile(5, 5),
+      new SnakeTile(4, 5)
     ];
     this.curDirection = null;
     this.newDirection = null;

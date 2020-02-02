@@ -1,3 +1,6 @@
+/**
+ * Represents a section of the snake.
+ */
 class SnakeTile {
   constructor(xPos, yPos, isHead = false) {
     this.xPos = xPos;

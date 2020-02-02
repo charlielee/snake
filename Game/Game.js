@@ -1,3 +1,4 @@
+import Apple from "../Snake/Apple.js"
 import Snake from "../Snake/Snake.js"
 
 class Game {
@@ -11,6 +12,8 @@ class Game {
 
     // Game state
     this.snake = new Snake(xTiles, yTiles);
+    this.apple = new Apple(xTiles, yTiles);
+    this.fillTile(this.apple.xCoor, this.apple.yCoor, "apple")
     this.isPlaying = false;
   }
 
@@ -22,10 +25,15 @@ class Game {
     requestAnimationFrame(() => { this.mainLoop() });
   }
 
+  /**
+   * Represents one movement of the snake
+   */
   mainLoop() {
     let self = this;
     setTimeout(function() {
       requestAnimationFrame(() => { self.mainLoop() });
+
+      // Move the snake
       self.move();
     }, 200);
   }
