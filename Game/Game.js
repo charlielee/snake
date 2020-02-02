@@ -26,9 +26,9 @@ class Game {
     this.renderSnake();
   }
 
-  move(direction) {
+  move(direction = null) {
     this.clearSnake();
-    this.snake.move(direction);
+    this.snake.move();
     this.renderSnake();
   }
 

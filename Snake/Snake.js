@@ -9,6 +9,7 @@ class Snake {
       new SnakeTile(4, 5),
       new SnakeTile(5, 5),
     ];
+    this.curDirection = null;
   }
 
   addTile() {
@@ -16,23 +17,44 @@ class Snake {
   }
 
   /**
-   * Updates the positions of each of the snake's tiles if it is moved
+   * Update the direction of travel if not the opposite to the current direction.
+   */ 
+  changeDirection(direction) {
+    switch (direction) {
+      case "right":
+        if (this.curDirection !== "left") this.curDirection = direction;
+        break;
+      case "left":
+        if (this.curDirection !== "right") this.curDirection = direction;
+        break;
+      case "up":
+        if (this.curDirection !== "down") this.curDirection = direction;
+        break;
+      case "down":
+        if (this.curDirection !== "up") this.curDirection = direction;
+        break;
+    }
+  }
+
+  /**
+   * Updates the positions of each of the snake's tiles
    */
-  move(direction) {
+  move() {
     let xChange = 0;
     let yChange = 0;
-    switch(direction) {
+
+    switch(this.curDirection) {
       case "right":
         xChange = 1;
         break;
       case "left":
         xChange = -1;
         break;
-      case "down":
-        yChange = 1;
-        break;
       case "up":
         yChange = -1;
+        break;
+      case "down":
+        yChange = 1;
         break;
     }
 

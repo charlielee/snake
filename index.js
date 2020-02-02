@@ -7,19 +7,18 @@ window.addEventListener('load', function () {
 
   // Move the snake if wasd are pressed
   document.addEventListener('keydown', (e) => {
-    console.log(e);
     switch (e.code) {
       case "KeyW":
-        g.move("up");
+        g.snake.changeDirection("up");
         break;
       case "KeyS":
-        g.move("down");
+        g.snake.changeDirection("down");
         break;
       case "KeyA":
-        g.move("left");
+        g.snake.changeDirection("left");
         break;
       case "KeyD":
-        g.move("right");
+        g.snake.changeDirection("right");
         break;
     }
   });
