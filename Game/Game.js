@@ -30,6 +30,40 @@ class Game {
     }, 200);
   }
 
+  /**
+   * Move the snake if wasd are pressed
+   */
+  keyboardController() {
+    let self = this;
+
+    document.addEventListener('keydown', (e) => {
+      let newDirection = null;
+      switch (e.code) {
+        case "KeyW":
+        case "ArrowUp":
+          newDirection = "up";
+          break;
+        case "KeyS":
+        case "ArrowDown":
+          newDirection = "down";
+          break;
+        case "KeyA":
+        case "ArrowLeft":
+          newDirection = "left";
+          break;
+        case "KeyD":
+        case "ArrowRight":
+          newDirection = "right";
+          break;
+      }
+
+      // Update the snakes direction to change on the next round of the main loop
+      self.snake.newDirection = newDirection;
+
+      if (!self.isPlaying) self.start();
+    });
+  }
+
   move() {
     this.clearSnake();
     this.snake.move();

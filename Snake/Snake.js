@@ -10,6 +10,7 @@ class Snake {
       new SnakeTile(5, 5),
     ];
     this.curDirection = null;
+    this.newDirection = null;
   }
 
   addTile() {
@@ -34,6 +35,7 @@ class Snake {
         if (this.curDirection !== "up") this.curDirection = direction;
         break;
     }
+    this.newDirection = null;
   }
 
   /**
@@ -43,6 +45,7 @@ class Snake {
     let xChange = 0;
     let yChange = 0;
 
+    this.changeDirection(this.newDirection);
     switch(this.curDirection) {
       case "right":
         xChange = 1;
@@ -75,15 +78,13 @@ class Snake {
         // Handle wrap around
         if (tile.xPos >= this.noOfXTiles) {
           tile.xPos = 0;
-        }
-        if (tile.xPos < 0) {
-          tile.xpos = this.noOfXTiles;
-        }
-        if (tile.yPos >= this.noOfYTiles) {
-          this.yPos = 0;
+        } else if (tile.xPos < 0) {
+          tile.xPos = this.noOfXTiles;
         }
         if (tile.yPos < 0) {
-          this.yPos = this.noOfYTiles;
+          tile.yPos = this.noOfYTiles;
+        } else if (tile.yPos >= this.noOfYTiles) {
+          tile.yPos = 0;
         }
       
       // Otherwise move the tile to the tile before it's previous position
