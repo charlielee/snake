@@ -14,6 +14,7 @@ class Game {
 
     // Game state
     this.score = 0;
+    this.scoreIndicator = document.querySelector("#score");
     this.snake = new Snake(noOfXTiles, noOfYTiles);
     this.updateApple();
     this.isPlaying = false;
@@ -44,6 +45,7 @@ class Game {
         self.snake.tiles[0].yPos === self.apple.yCoor
       ) {
         self.score++;
+        self.scoreIndicator.innerText = self.score;
         self.updateApple();
       }
 
