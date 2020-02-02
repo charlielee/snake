@@ -15,8 +15,31 @@ class Snake {
     this.newDirection = null;
   }
 
+  /**
+   * Add a tile to the snake in the direction of the last tile
+   */
   addTile() {
-    // todo
+    let lastTile = this.tiles[this.tiles.length-1];
+    let newX = lastTile.xPos;
+    let newY = lastTile.yPos;
+
+    // Change the snake's direction before moving as and when
+    switch(lastTile.direction) {
+      case "right":
+        newX -= 1;
+        break;
+      case "left":
+        newX += 1;
+        break;
+      case "up":
+        newY -= 1;
+        break;
+      case "down":
+        newY += 1;
+        break;
+    }
+
+    this.tiles.push(new SnakeTile(newX, newY));
   }
 
   /**
@@ -47,6 +70,7 @@ class Snake {
     let xChange = 0;
     let yChange = 0;
 
+    // Change the snake's direction before moving as and when
     this.changeDirection(this.newDirection);
     switch(this.curDirection) {
       case "right":
@@ -70,12 +94,14 @@ class Snake {
       oldPositions.push({
         xPos: tile.xPos,
         yPos: tile.yPos,
+        direction: tile.direction
       })
 
       // Move the head of the snake in the new direction
       if (tile.isHead) {
         tile.xPos += xChange;
         tile.yPos += yChange;
+        tile.direction = this.curDirection;
 
         // Handle wrap around
         if (tile.xPos >= this.noOfXTiles) {
@@ -93,6 +119,10 @@ class Snake {
       } else {
         tile.xPos = oldPositions[index - 1].xPos;
         tile.yPos = oldPositions[index - 1].yPos;
+
+        // Set the direction of the tile
+        tile.direction = oldPositions[index - 1].direction;
+        if (!tile.direction) tile.direction = oldPositions[0].direction;
       }
     });
   }

@@ -40,13 +40,13 @@ class Game {
       self.move();
 
       // Check if an apple is caught
-      if (
-        self.snake.tiles[0].xPos === self.apple.xCoor &&
-        self.snake.tiles[0].yPos === self.apple.yCoor
-      ) {
+      if (self.apple.isCaught(self.snake)) {
         self.score++;
         self.scoreIndicator.innerText = self.score;
         self.updateApple();
+
+        // Increase the length of the snake
+        self.snake.addTile();
       }
 
     }, 200);
