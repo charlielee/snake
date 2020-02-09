@@ -19,6 +19,7 @@ class Game {
     this.snake = new Snake(noOfXTiles, noOfYTiles);
     this.updateApple();
     this.isPlaying = false;
+    this.getHighScore();
   }
 
   /**
@@ -161,8 +162,23 @@ class Game {
     );
   }
 
+  getHighScore() {
+    let highScore = localStorage.getItem('myHighScore');
+    document.querySelector("#myHighScore").innerText = highScore;
+    return (highScore === null ? 0 : highScore);
+  }
+
+  setHighScore(score) {
+    localStorage.setItem('myHighScore', score);
+  }
+
   gameOver() {
     alert(`Game Over! You scored ${this.score}.`);
+
+    // Update the high score
+    if (this.score > this.getHighScore()) {
+      this.setHighScore(this.score);
+    }
 
     // Reset the game
     this.isPlaying = false;
@@ -173,6 +189,7 @@ class Game {
     this.snake = new Snake(this.noOfXTiles, this.noOfYTiles);
     this.renderSnake();
     this.updateApple();
+    this.getHighScore();
   }
 }
 
